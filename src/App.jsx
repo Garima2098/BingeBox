@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import Body from '../src/components/Body/Body';
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <h1 className="text-xl font-semibold text-gray-800 ">gaurav</h1>;
+  return (
+    
+      <Body />
+   
+  );
 }
 
 export default App;
