@@ -6,17 +6,25 @@
 #FEATURES(Planning)
 
 -Login/Signup
-
+   
     -Sign In/Sign Up Form
     
     -Redirect to Brower Page
+
 -Browser(Only after Auth)
+
     -Header
+    
     -Main Movie 
+    
         -Trailer in Backgroud
+       
         -Title and description
+       
         -Movie Suggestions
-            -Movie List*N
+          
+            -Movie List * N
 -FlixGpt
+    -Movie Suggestions
     -Search Bar
         -Movie Suggestions
