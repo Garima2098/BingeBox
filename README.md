@@ -1,9 +1,14 @@
 #FLIX GPT
+
 ->Used Vite--React with the tailwind
 
+
 #FEATURES(Planning)
+
 -Login/Signup
+
     -Sign In/Sign Up Form
+    
     -Redirect to Brower Page
 -Browser(Only after Auth)
     -Header
