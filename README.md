@@ -24,7 +24,8 @@
         -Movie Suggestions
           
             -Movie List * N
--FlixGpt
-    -Movie Suggestions
-    -Search Bar
-        -Movie Suggestions
+-FlixGpt 
+       
+       -Search Bar
+       
+           -Movie Suggestions
