@@ -4,20 +4,21 @@ import Login from '../Login/Login';
 import Browse from '../BrowsePage/Browse';
 import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
+import MainLayout from '../MainLayout/MainLayout';
 
 const Body = () => {
   const appRouter = createBrowserRouter([
     {
       path: '/',
-      element: <LandingPage />,
+      element: <MainLayout />,
+      children: [
+        { path: '/', element: <LandingPage /> },
+        { path: '/login', element: <Login /> },
+      ],
     },
     {
       path: '/browse',
       element: <Browse />,
-    },
-    {
-      path: '/login',
-      element: <Login />,
     },
   ]);
   return (
