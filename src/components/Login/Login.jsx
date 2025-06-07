@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { checkValidateData } from '../../utils/validate';
 
 const Login = () => {
-  const [isLoginIn, setIsLoginIn] = useState(true);
+    const [isLoginIn, setIsLoginIn] = useState(true);
+    const[errorMessage,setErrorMessage]=useState(null)
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleClickButton = (e) => {
+    e.preventDefault(); // prevent form reload
+    const message = checkValidateData(
+      email.current.value,
+      password.current.value
+    );
+    setErrorMessage(message)
+  };
 
   const handleSignInSignUp = (e) => {
-    e.preventDefault(); //Preventing from reloaing when switching between signin and signup
+    e.preventDefault();
     setIsLoginIn(!isLoginIn);
   };
 
@@ -25,7 +38,6 @@ const Login = () => {
             {isLoginIn ? 'Sign In' : 'Sign Up'}
           </h1>
 
-          {/* Name Field for Sign Up only */}
           {!isLoginIn && (
             <input
               type="text"
@@ -35,20 +47,29 @@ const Login = () => {
           )}
 
           <input
+            ref={email}
             type="email"
             placeholder="Email or phone number"
             className="w-full p-4 mb-4 rounded bg-gray-700 text-white placeholder-gray-300 outline-none"
           />
+         
 
           <input
+            ref={password}
             type="password"
             placeholder="Password"
             className="w-full p-4 mb-6 rounded bg-gray-700 text-white placeholder-gray-300 outline-none"
           />
+          {errorMessage && (
+            <p className="text-red-500 text-sm mb-4 text-center">
+              {errorMessage}
+            </p>
+          )}
 
           <button
+            type="button"
+            onClick={handleClickButton}
             className="w-full bg-[rgb(229,9,20)] py-3 rounded font-semibold hover:bg-red-700 transition"
-            type="submit"
           >
             {isLoginIn ? 'Sign In' : 'Sign Up'}
           </button>
