@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const hideSignInButton = location.pathname === '/ ';
+  const hideSignInButton = location.pathname !== '/ ';
   return (
     <div className="absolute w-full flex justify-between items-center px-10 py-6 z-30">
       <img
