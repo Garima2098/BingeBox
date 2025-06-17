@@ -1,9 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { checkValidateData } from '../../utils/validate';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { auth } from '../../utils/firebase';
 
 const Login = () => {
-    const [isLoginIn, setIsLoginIn] = useState(true);
-    const[errorMessage,setErrorMessage]=useState(null)
+  const [isLoginIn, setIsLoginIn] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
   const email = useRef(null);
   const password = useRef(null);
 
@@ -13,7 +18,44 @@ const Login = () => {
       email.current.value,
       password.current.value
     );
-    setErrorMessage(message)
+    setErrorMessage(message);
+    if (message) return;
+    if (!isLoginIn) {
+      //Write the signup logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
+    } else {
+      //write the signin logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
+    }
   };
 
   const handleSignInSignUp = (e) => {
@@ -52,7 +94,6 @@ const Login = () => {
             placeholder="Email or phone number"
             className="w-full p-4 mb-4 rounded bg-gray-700 text-white placeholder-gray-300 outline-none"
           />
-         
 
           <input
             ref={password}
