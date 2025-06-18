@@ -1,0 +1,28 @@
+// 📒  Ways to Get Input Values in React (for Validation / Form Handling)
+// 1. Using useState (Controlled Components)
+// ✔️ Best for real-time validation, UI updates, and form control
+// const [email, setEmail] = useState('');
+// <input
+//   type="email"
+//   value={email}
+//   onChange={(e) => setEmail(e.target.value)}
+// />
+// 🔍 Pros:
+// Reactively updates on every keystroke
+// Easy to validate and manage state
+// Preferred for form-heavy UIs
+
+// 2. Using useRef (Uncontrolled Components)
+// ✔️ Best for simple input capture without frequent re-renders
+
+// const emailRef = useRef();
+
+// <input type="email" ref={emailRef} />
+
+//  Access value->It will create the reference of that input box with the object and we can extact value from that
+// const email = emailRef.current.value;
+// 🔍 Pros:
+// No re-renders on every keystroke
+// Lightweight for performance
+// Ideal for quick, one-time reads (e.g. on submit)
+

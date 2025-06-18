@@ -1,6 +1,16 @@
 #FLIX GPT
 
 ->Used Vite--React with the tailwind
+->Header
+->Routing the App
+->Login Form
+->Sign up Form
+->Form Validation
+->useRef hook
+->Created SignupUser Account
+->Implemented Signin user Api
+->Created Redux store with userSlice
+->
 
 
 #FEATURES(Planning)

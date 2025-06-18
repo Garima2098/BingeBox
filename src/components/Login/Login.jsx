@@ -1,10 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { checkValidateData } from '../../utils/validate';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
+import { auth } from '../../utils/firebase';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [isLoginIn, setIsLoginIn] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
+  const email = useRef(null);
+  const password = useRef(null);
+  const name = useRef(null);
+
+  const handleClickButton = (e) => {
+    e.preventDefault(); // prevent form reload
+    const message = checkValidateData(
+      email.current.value,
+      password.current.value
+    );
+    setErrorMessage(message);
+    if (message) return;
+    if (!isLoginIn) {
+      //Write the signup logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: 'https://example.com/jane-q-user/profile.jpg',
+          })
+            .then(() => {
+              // Profile updated!
+              navigate('/browse');
+              // ...
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
+          console.log(user);
+
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
+    } else {
+      //write the signin logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          navigate('/browse');
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
+        });
+    }
+  };
 
   const handleSignInSignUp = (e) => {
-    e.preventDefault(); //Preventing from reloaing when switching between signin and signup
+    e.preventDefault();
     setIsLoginIn(!isLoginIn);
   };
 
@@ -25,9 +100,9 @@ const Login = () => {
             {isLoginIn ? 'Sign In' : 'Sign Up'}
           </h1>
 
-          {/* Name Field for Sign Up only */}
           {!isLoginIn && (
             <input
+              ref={name}
               type="text"
               placeholder="Name"
               className="w-full p-4 mb-4 rounded bg-gray-700 text-white placeholder-gray-300 outline-none"
@@ -35,20 +110,28 @@ const Login = () => {
           )}
 
           <input
+            ref={email}
             type="email"
             placeholder="Email or phone number"
             className="w-full p-4 mb-4 rounded bg-gray-700 text-white placeholder-gray-300 outline-none"
           />
 
           <input
+            ref={password}
             type="password"
             placeholder="Password"
             className="w-full p-4 mb-6 rounded bg-gray-700 text-white placeholder-gray-300 outline-none"
           />
-
+          {errorMessage && (
+            <p className="text-red-500 text-sm mb-4 text-center">
+              {errorMessage}
+            </p>
+          )}
+          
           <button
+            type="button"
+            onClick={handleClickButton}
             className="w-full bg-[rgb(229,9,20)] py-3 rounded font-semibold hover:bg-red-700 transition"
-            type="submit"
           >
             {isLoginIn ? 'Sign In' : 'Sign Up'}
           </button>
